@@ -1,0 +1,24 @@
+{
+  "name": "typescript-simulation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/.out/index.js",
+  "scripts": {
+    "start": "node .out/index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonichaelmight/TypeScript-Simulation.git"
+  },
+  "author": "Michael Saunders",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonichaelmight/TypeScript-Simulation/issues"
+  },
+  "homepage": "https://github.com/tonichaelmight/TypeScript-Simulation#readme",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  }
+}

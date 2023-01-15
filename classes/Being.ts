@@ -1,6 +1,6 @@
 import { TLevelingMatrix, TStats, IStats } from "../interfaces/Stats";
 import { getRandomInt } from "../utils";
-import { Action, ActionsArray } from "./Action";
+import { Action, TActionsArray } from "./Action";
 
 const baseStats: TStats = {
   level: 0,
@@ -25,7 +25,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
   luck: 3
 }
 
-const beingActions: ActionsArray = [
+const beingActions: TActionsArray = [
   new Action('leave', 1, () => getRandomInt(4) === 0 ? console.log('Player leaves') : console.log('Player thinks'))
 ]
 
@@ -43,7 +43,7 @@ const beingActions: ActionsArray = [
 export abstract class Being implements IStats {
   stats: TStats;
   levelingMatrix: TLevelingMatrix;
-  actions: ActionsArray = [];
+  actions: TActionsArray = [];
 
   constructor(statsObject: TStats = baseStats, levelingMatrix: TLevelingMatrix = baseLevelingMatrix, level: number = 0) {
     if (typeof statsObject === 'number') {
@@ -58,7 +58,7 @@ export abstract class Being implements IStats {
     }
   }
 
-  attachActions(actions: ActionsArray) {
+  attachActions(actions: TActionsArray) {
     // console.log(this.actions);
     // console.log(actions);
     this.actions = this.actions.concat(actions);
@@ -66,6 +66,12 @@ export abstract class Being implements IStats {
 
   levelStat(stat: string) {
     this.stats[stat] += Math.round(getRandomInt((this.levelingMatrix[stat]) / 5) * Math.log2(this.stats.level * 2));
+    let matrixAddend = Math.round(Math.log2(getRandomInt(getRandomInt(this.stats[stat]) * getRandomInt(this.stats.luck)) / (100 * Math.sqrt(this.stats.level)) ))
+    if (matrixAddend < 0 || matrixAddend === -Infinity || matrixAddend === Infinity) {
+      matrixAddend = 0;
+    }
+    console.log(matrixAddend);
+    this.levelingMatrix[stat] += matrixAddend;
   }
 
   levelUp() {
@@ -79,7 +85,7 @@ export abstract class Being implements IStats {
 
   // tick should be overwritten in surface level classes
   tick() {
-    const possibleActions = this.getPossibleActionArray();
+    const possibleActions = this.getPossibleActionsArray();
     const randNum = getRandomInt(possibleActions.length + (100 - (this.stats.level / 2)));
     console.log(randNum);
     if (possibleActions[randNum]) {
@@ -87,7 +93,7 @@ export abstract class Being implements IStats {
     }
   }
 
-  getPossibleActionArray() {
+  getPossibleActionsArray() {
     const actionArray = [];
     for (const action of this.actions) {
       for (let i = 0; i < action.weight; i++) {

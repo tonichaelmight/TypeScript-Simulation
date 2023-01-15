@@ -57,6 +57,12 @@ class Being {
     }
     levelStat(stat) {
         this.stats[stat] += Math.round((0, utils_1.getRandomInt)((this.levelingMatrix[stat]) / 5) * Math.log2(this.stats.level * 2));
+        let matrixAddend = Math.round(Math.log2((0, utils_1.getRandomInt)((0, utils_1.getRandomInt)(this.stats[stat]) * (0, utils_1.getRandomInt)(this.stats.luck)) / (100 * Math.sqrt(this.stats.level))));
+        if (matrixAddend < 0 || matrixAddend === -Infinity || matrixAddend === Infinity) {
+            matrixAddend = 0;
+        }
+        console.log(matrixAddend);
+        this.levelingMatrix[stat] += matrixAddend;
     }
     levelUp() {
         if (this.stats.level < 100) {
@@ -68,14 +74,14 @@ class Being {
     }
     // tick should be overwritten in surface level classes
     tick() {
-        const possibleActions = this.getPossibleActionArray();
+        const possibleActions = this.getPossibleActionsArray();
         const randNum = (0, utils_1.getRandomInt)(possibleActions.length + (100 - (this.stats.level / 2)));
         console.log(randNum);
         if (possibleActions[randNum]) {
             possibleActions[randNum].execute();
         }
     }
-    getPossibleActionArray() {
+    getPossibleActionsArray() {
         const actionArray = [];
         for (const action of this.actions) {
             for (let i = 0; i < action.weight; i++) {

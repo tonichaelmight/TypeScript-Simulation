@@ -10,4 +10,4 @@ export class Action {
   }
 }
 
-export type ActionsArray = Action[];
+export type TActionsArray = Action[];

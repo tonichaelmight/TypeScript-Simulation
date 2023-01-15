@@ -1,7 +1,6 @@
 import { TStats, TLevelingMatrix } from "../interfaces/Stats";
-import { getRandomInt } from "../utils";
 import { Person } from "./Person";
-import { Action, ActionsArray } from "./Action";
+import { Action, TActionsArray } from "./Action";
 
 const baseStats: TStats = {
   level: 0,
@@ -26,7 +25,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
   luck: 7
 }
 
-const playerActions: ActionsArray = [
+const playerActions: TActionsArray = [
   new Action('whistle', 2, () => console.log('Player whistles')),
   new Action('cough', 1, () => console.log('Player coughs')),
   new Action('sing', 5, () => console.log('Player sings'))

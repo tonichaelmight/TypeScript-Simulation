@@ -8,7 +8,7 @@ const player = new Player();
 active.push(player);
 
 const tick = () => {
-  // console.log(player.stats);
+  console.log(player);
   active.forEach(character => {
     character.tick();
   })
@@ -21,4 +21,4 @@ const game = setInterval(() => {
     clearInterval(game);
     console.log('You lost lol');
   }
-}, 500);
+}, 500); // this is the interval of tick() in milliseconds

@@ -28,10 +28,6 @@ const baseLevelingMatrix = {
 // Generally excel in physical attack and defense and weak in magic
 class Animal extends Being_1.Being {
     constructor(statsObject = baseStats, levelingMatrix = baseLevelingMatrix, level = 0) {
-        if (typeof statsObject === 'number') {
-            level = statsObject;
-            statsObject = baseStats;
-        }
         super(statsObject, levelingMatrix, level);
     }
 }
