@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tonichaelmight/TypeScript-Simulation#readme",
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "chai": "^4.3.7",
     "mocha": "^10.2.0"
   }
