@@ -45,7 +45,7 @@ export abstract class Being implements IStats {
   levelingMatrix: TLevelingMatrix;
   actions: TActionsArray = [];
 
-  constructor(statsObject: TStats = baseStats, levelingMatrix: TLevelingMatrix = baseLevelingMatrix, level: number = 0) {
+  constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
       level = statsObject;
       statsObject = baseStats;

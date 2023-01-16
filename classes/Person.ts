@@ -25,7 +25,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 export abstract class Person extends Being {
-  constructor(statsObject: TStats = baseStats, levelingMatrix: TLevelingMatrix = baseLevelingMatrix, level: number = 0) {
+  constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     super(statsObject, levelingMatrix, level);
   }
 }

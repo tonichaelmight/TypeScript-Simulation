@@ -24,7 +24,7 @@ const baseLevelingMatrix = {
     luck: 5
 };
 class Person extends Being_1.Being {
-    constructor(statsObject = baseStats, levelingMatrix = baseLevelingMatrix, level = 0) {
+    constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         super(statsObject, levelingMatrix, level);
     }
 }

@@ -29,7 +29,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
   // Generally excel in physical attack and defense and weak in magic
 
 export abstract class Animal extends Being {
-  constructor(statsObject: TStats = baseStats, levelingMatrix: TLevelingMatrix = baseLevelingMatrix, level: number = 0) {
+  constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     super(statsObject, levelingMatrix, level);
   }
 }

@@ -37,7 +37,7 @@ const beingActions = [
 // First level extensions should always include an overwrite, beyond that is more optional
 // Have a tick() method
 class Being {
-    constructor(statsObject = baseStats, levelingMatrix = baseLevelingMatrix, level = 0) {
+    constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         this.actions = [];
         if (typeof statsObject === 'number') {
             level = statsObject;

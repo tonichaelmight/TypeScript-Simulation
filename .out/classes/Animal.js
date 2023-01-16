@@ -27,7 +27,7 @@ const baseLevelingMatrix = {
 // Generally less agressive than monsters, but more aggressive that Persons
 // Generally excel in physical attack and defense and weak in magic
 class Animal extends Being_1.Being {
-    constructor(statsObject = baseStats, levelingMatrix = baseLevelingMatrix, level = 0) {
+    constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         super(statsObject, levelingMatrix, level);
     }
 }

@@ -30,7 +30,7 @@ const playerActions = [
     new Action_1.Action('sing', 5, () => console.log('Player sings'))
 ];
 class Player extends Person_1.Person {
-    constructor(statsObject = baseStats, levelingMatrix = baseLevelingMatrix, level = 0) {
+    constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         if (typeof statsObject === 'number') {
             level = statsObject;
             statsObject = baseStats;
