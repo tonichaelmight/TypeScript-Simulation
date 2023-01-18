@@ -78,8 +78,9 @@ class Being {
         const randNum = (0, utils_1.getRandomInt)(possibleActions.length + (100 - (this.stats.level / 2)));
         console.log(randNum);
         if (possibleActions[randNum]) {
-            possibleActions[randNum].execute();
+            return new Action_1.SubmittedAction(possibleActions[randNum], this);
         }
+        return null;
     }
     getPossibleActionsArray() {
         const actionArray = [];

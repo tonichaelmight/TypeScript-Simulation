@@ -32,7 +32,6 @@ const playerActions: TActionsArray = [
 ]
 
 export class Player extends Person {
-
   constructor(statsObject: TStats | number = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
       level = statsObject;

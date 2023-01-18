@@ -1,6 +1,6 @@
 import { TLevelingMatrix, TStats, IStats } from "../interfaces/Stats";
 import { getRandomInt } from "../utils";
-import { Action, TActionsArray } from "./Action";
+import { Action, SubmittedAction, TActionsArray } from "./Action";
 
 const baseStats: TStats = {
   level: 0,
@@ -89,8 +89,9 @@ export abstract class Being implements IStats {
     const randNum = getRandomInt(possibleActions.length + (100 - (this.stats.level / 2)));
     console.log(randNum);
     if (possibleActions[randNum]) {
-      possibleActions[randNum].execute();
+      return new SubmittedAction(possibleActions[randNum], this);
     }
+    return null;
   }
 
   getPossibleActionsArray() {
