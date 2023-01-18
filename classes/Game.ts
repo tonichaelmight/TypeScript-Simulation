@@ -1,5 +1,6 @@
 import { Action, SubmittedAction } from "./Action";
 import { Being } from "./Being";
+import { Cat } from "./Cat";
 import { Player } from "./Player";
 
 export class Game {
@@ -9,7 +10,7 @@ export class Game {
 
   constructor() {
     this.player = new Player();
-    this.active = [this.player];
+    this.active = [this.player, new Cat()];
   }
 
   start() {
