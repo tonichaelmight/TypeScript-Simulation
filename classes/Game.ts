@@ -1,4 +1,4 @@
-import { Action, SubmittedAction } from "./Action";
+import { SubmittedAction } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
 import { Player } from "./Player";
