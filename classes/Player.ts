@@ -1,6 +1,7 @@
 import { TStats, TLevelingMatrix } from "../interfaces/Stats";
 import { Person } from "./Person";
 import { Action, TActionsArray } from "./Action";
+import { getRandomInt } from "../utils";
 
 const baseStats: TStats = {
   level: 0,
@@ -28,7 +29,8 @@ const baseLevelingMatrix: TLevelingMatrix = {
 const playerActions: TActionsArray = [
   new Action('whistle', 2, () => console.log('Player whistles')),
   new Action('cough', 1, () => console.log('Player coughs')),
-  new Action('sing', 5, () => console.log('Player sings'))
+  new Action('sing', 5, () => console.log('Player sings')),
+  new Action('leave', 1, () => console.log('Player thinks')) // overwrite so player can't leave
 ]
 
 export class Player extends Person {

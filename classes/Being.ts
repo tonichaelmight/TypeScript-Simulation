@@ -26,7 +26,14 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const beingActions: TActionsArray = [
-  new Action('leave', 1, () => getRandomInt(4) === 0 ? console.log('Player leaves') : console.log('Player thinks'))
+  new Action('leave', 1, () => {
+    if (getRandomInt(4) === 0) {
+      console.log('Player leaves');
+      // need connection to the character to set its 'isLeaving' property
+    } else {
+      console.log('Player thinks');
+    } 
+  })
 ]
 
 
@@ -44,6 +51,7 @@ export abstract class Being implements IStats {
   stats: TStats;
   levelingMatrix: TLevelingMatrix;
   actions: TActionsArray = [];
+  isLeaving: boolean = false;
 
   constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
@@ -103,4 +111,9 @@ export abstract class Being implements IStats {
     }
     return actionArray;
   }
+
+  callAction(action: Action) {
+
+  }
+
 }

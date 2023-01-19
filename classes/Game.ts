@@ -1,3 +1,4 @@
+import { EventEmitter } from "stream";
 import { SubmittedAction } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
@@ -35,6 +36,11 @@ export class Game {
     for (const action of submittedActions) {
       action.execute();
     }
+
+    this.active.forEach(character => {
+      // remove characters that are leaving or are dead
+    });
+
   }
 
 }
