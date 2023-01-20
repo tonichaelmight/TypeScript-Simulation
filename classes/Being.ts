@@ -28,8 +28,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
 const beingActions: TActionsArray = [
   new Action('leave', 1, (caller) => {
     if (getRandomInt(4) === 0) {
-      console.log(`${caller.screenName} leaves`);
-      // need connection to the character to set its 'isLeaving' property
+      caller.isLeaving = true;
     } else {
       console.log(`${caller.screenName} thinks`);
     } 
@@ -111,6 +110,10 @@ export abstract class Being implements IStats {
       }
     }
     return actionArray;
+  }
+
+  getRandomName() {
+    const names = ['Bud', 'Jimm', 'Ellaiah']
   }
 
   callAction(action: Action) {

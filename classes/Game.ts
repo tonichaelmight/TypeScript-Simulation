@@ -1,4 +1,5 @@
 import { EventEmitter } from "stream";
+import { getRandomInt } from "../utils";
 import { SubmittedAction } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
@@ -25,6 +26,21 @@ export class Game {
   }
 
   tick() {
+    const submittedActions = this.getSubmittedActions();
+
+    if (getRandomInt(15) === 1) {
+      this.spawn();
+    }
+
+    for (const action of submittedActions) {
+      action.execute();
+    }
+
+    this.purgeActive();
+
+  }
+  
+  getSubmittedActions() {
     const submittedActions: SubmittedAction[] = [];
     this.active.forEach(character => {
       const characterAction = character.tick();
@@ -32,14 +48,24 @@ export class Game {
         submittedActions.push(characterAction);
       }
     });
+    return submittedActions;
+  }
 
-    for (const action of submittedActions) {
-      action.execute();
-    }
-
+  purgeActive() {
     this.active.forEach(character => {
-      // remove characters that are leaving or are dead
-    });
+      if (character.stats.health <= 0) {
+        console.log(`${character.screenName} has died.`)
+      } else if (character.isLeaving) {
+        console.log(`${character.screenName} left`)
+      }
+    })
+
+    this.active = this.active.filter(character => {
+      return (character === this.player || (!character.isLeaving && character.stats.health > 0));
+    })
+  }
+
+  spawn() {
 
   }
 

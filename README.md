@@ -11,7 +11,7 @@ An average day on the job consists of things like selling potions, repairing arm
 
 To start with at least, this is just going to be a text-based simulator that doesn't involve any user input. The primary purpose of this project is to learn more about TypeScript and just writing up a code base/project from scratch. I may eventually work it into a more substantial game with more visually stimulating components, but that would be a far off happening.
 
-The game is built off the `tick()` method in `index.ts`, which calls repeatedly at a fixed interval. At the beginning of the game, the player is the only one present in the `active` zone (also defined in `index.ts`). At each tick, there will be a chance for new characters to enter the active zone. Any characters in the active zone, including the player, has the chance to randomly perform an `Action` on each tick, by calling their own `tick()` method. Once one or more additional characters are in the active zone, there will be the chance on each tick that either the player will interact with one of them or they will interact with the player. Characters besides the player will also be able to interact with each other within the active zone. All characters besides the player also have the chance to leave the active zone on each tick.
+The game is built off the `tick()` method in the `Game` class, which calls repeatedly at a fixed interval. At the beginning of the game, the player is the only one present in the `active` zone (also defined in `index.ts`). At each tick, there will be a chance for new characters to enter the active zone. Any characters in the active zone, including the player, has the chance to randomly perform an `Action` on each tick, by calling their own `tick()` method. Once one or more additional characters are in the active zone, there will be the chance on each tick that either the player will interact with one of them or they will interact with the player. Characters besides the player will also be able to interact with each other within the active zone. All characters besides the player also have the chance to leave the active zone on each tick.
 
 If a single character performs an `Action` on a tick, they will simply do it. If more than one character ends up acting on a single tick, though, a calculation will be performed around the `speed` stat to determine the order of `Action`s.
 
@@ -45,6 +45,11 @@ An array of `Action`s. All instances that extend from `Being` have a property `a
 
 ## ___Classes___
 
+### `Game`
+- The top-level object; gets called directly in `index.ts`
+- Holds the state for the game
+- `tick()`s
+
 ### `Action`
 
 ### `Interaction`
@@ -62,7 +67,7 @@ An array of `Action`s. All instances that extend from `Being` have a property `a
 - All `Being`s have a `tick()` method, which polls their available `Action`s and may randomly select one to execute.
 - `Being` and all extended classes must use `attachActions()` in their constructor method to add `Action`s to `actions`
 
-### `Person`
+### `Human`
 
 ### `Player`
 

@@ -30,7 +30,7 @@ const playerActions: TActionsArray = [
   new Action('whistle', 2, (caller) => console.log(`${caller.screenName} whistles`)),
   new Action('cough', 1, (caller) => console.log(`${caller.screenName} coughs`)),
   new Action('sing', 5, (caller) => console.log(`${caller.screenName} sings`)),
-  new Action('leave', 1, (caller) => console.log(`${caller.screenName} thinks`)) // overwrite so player can't leave
+  new Action('think', 1, (caller) => console.log(`${caller.screenName} thinks`)) 
 ]
 
 export class Player extends Human {
@@ -40,6 +40,7 @@ export class Player extends Human {
       statsObject = baseStats;
     }
     super(statsObject, levelingMatrix, level);
+    this.actions = []; // total overwrite to avoid player trying to leave
     this.attachActions(playerActions);
     this.screenName = 'Player';
   }

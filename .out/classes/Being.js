@@ -27,8 +27,7 @@ const baseLevelingMatrix = {
 const beingActions = [
     new Action_1.Action('leave', 1, (caller) => {
         if ((0, utils_1.getRandomInt)(4) === 0) {
-            console.log(`${caller.screenName} leaves`);
-            // need connection to the character to set its 'isLeaving' property
+            caller.isLeaving = true;
         }
         else {
             console.log(`${caller.screenName} thinks`);
@@ -100,6 +99,9 @@ class Being {
             }
         }
         return actionArray;
+    }
+    getRandomName() {
+        const names = ['Bud', 'Jimm', 'Ellaiah'];
     }
     callAction(action) {
         action.execute(this);
