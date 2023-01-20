@@ -32,4 +32,8 @@ export abstract class Animal extends Being {
   constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     super(statsObject, levelingMatrix, level);
   }
+
+  getRandomName(names: string[]) {
+    return super.getRandomName(names);
+  }
 }

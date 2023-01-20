@@ -40,6 +40,7 @@ class Player extends Human_1.Human {
         this.actions = []; // total overwrite to avoid player trying to leave
         this.attachActions(playerActions);
         this.screenName = 'Player';
+        // console.log(this);
     }
 }
 exports.Player = Player;

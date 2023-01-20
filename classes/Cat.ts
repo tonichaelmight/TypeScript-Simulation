@@ -27,9 +27,13 @@ const baseLevelingMatrix: TLevelingMatrix = {
 
 const catActions: Action[] = [
   new Action('meow', 5, (caller) => console.log(`${caller.screenName} meows`)),
-  new Action('poison_self', 15, (caller) => {
-    caller.stats.health -= 5
-    console.log(`${caller.screenName} takes 5 self-inflicted poison damage`)
+  new Action('scratch_self', 15, (caller) => {
+    caller.hp -= 5
+    console.log(`${caller.screenName} takes 5 damage scratching themself`)
+  }),
+  new Action('black_magic', 3, (caller) => {
+    console.log(`${caller.screenName} glows and vibrates`)
+    caller.levelUp();
   })
 ]
 
@@ -46,6 +50,6 @@ export class Cat extends Animal {
 
   getRandomName() {
     const names = ['Meowsy', 'Big Puss', 'Stacy', 'Jemberly'];
-    return names[Math.floor(Math.random() * names.length)]
+    return super.getRandomName(names);
   }
 }

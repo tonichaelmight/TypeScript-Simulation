@@ -58,6 +58,7 @@ class Being {
         while (this.stats.level < level) {
             this.levelUp();
         }
+        this.hp = this.stats.health;
     }
     attachActions(actions) {
         // console.log(this.actions);
@@ -70,22 +71,24 @@ class Being {
         if (matrixAddend < 0 || matrixAddend === -Infinity || matrixAddend === Infinity) {
             matrixAddend = 0;
         }
-        console.log(matrixAddend);
+        // console.log(matrixAddend);
         this.levelingMatrix[stat] += matrixAddend;
     }
     levelUp() {
         if (this.stats.level < 100) {
             this.stats.level++;
+            console.log(`${this.screenName} leveled up to level ${this.stats.level}`);
             for (const stat in this.levelingMatrix) {
                 this.levelStat(stat);
             }
+            this.hp = this.stats.health;
         }
     }
     // tick should be overwritten in surface level classes
     tick() {
         const possibleActions = this.getPossibleActionsArray();
         const randNum = (0, utils_1.getRandomInt)(possibleActions.length + (100 - (this.stats.level / 2)));
-        console.log(randNum);
+        // console.log(randNum);
         if (possibleActions[randNum]) {
             return new Action_1.SubmittedAction(possibleActions[randNum], this);
         }
@@ -100,8 +103,8 @@ class Being {
         }
         return actionArray;
     }
-    getRandomName() {
-        const names = ['Bud', 'Jimm', 'Ellaiah'];
+    getRandomName(names) {
+        return names[Math.floor(Math.random() * names.length)];
     }
     callAction(action) {
         action.execute(this);

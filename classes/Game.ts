@@ -4,15 +4,17 @@ import { SubmittedAction } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
 import { Player } from "./Player";
+import { Witch } from "./Witch";
 
 export class Game {
   player: Player;
   active: Being[];
   instance: ReturnType<typeof setTimeout> = setTimeout(() => {}, 1000);
+  spawnable = [Cat, Witch];
 
   constructor() {
     this.player = new Player();
-    this.active = [this.player, new Cat()];
+    this.active = [this.player];
   }
 
   start() {
@@ -22,13 +24,13 @@ export class Game {
         clearInterval(this.instance);
         console.log('You lost lol');
       }
-    }, 500); // this is the interval of tick() in milliseconds    
+    }, 1000); // this is the interval of tick() in milliseconds    
   }
 
   tick() {
     const submittedActions = this.getSubmittedActions();
 
-    if (getRandomInt(15) === 1) {
+    if (getRandomInt(50) === 1) {
       this.spawn();
     }
 
@@ -54,7 +56,7 @@ export class Game {
   purgeActive() {
     this.active.forEach(character => {
       if (character.stats.health <= 0) {
-        console.log(`${character.screenName} has died.`)
+        console.log(`${character.screenName} has died`)
       } else if (character.isLeaving) {
         console.log(`${character.screenName} left`)
       }
@@ -66,7 +68,10 @@ export class Game {
   }
 
   spawn() {
-
+    const spawnIndex = getRandomInt(this.spawnable.length);
+    const noobie = new this.spawnable[spawnIndex]();
+    console.log(`${noobie.screenName} enters`)
+    this.active.push(noobie);
   }
 
 }

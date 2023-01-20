@@ -30,5 +30,8 @@ class Animal extends Being_1.Being {
     constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         super(statsObject, levelingMatrix, level);
     }
+    getRandomName(names) {
+        return super.getRandomName(names);
+    }
 }
 exports.Animal = Animal;

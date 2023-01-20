@@ -52,6 +52,7 @@ export abstract class Being implements IStats {
   actions: TActionsArray = [];
   isLeaving: boolean = false;
   screenName: string = '';
+  hp: number;
 
   constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
@@ -64,6 +65,7 @@ export abstract class Being implements IStats {
     while (this.stats.level < level) {
       this.levelUp();
     }
+    this.hp = this.stats.health;
   }
 
   attachActions(actions: TActionsArray) {
@@ -78,24 +80,25 @@ export abstract class Being implements IStats {
     if (matrixAddend < 0 || matrixAddend === -Infinity || matrixAddend === Infinity) {
       matrixAddend = 0;
     }
-    console.log(matrixAddend);
+    // console.log(matrixAddend);
     this.levelingMatrix[stat] += matrixAddend;
   }
 
   levelUp() {
     if (this.stats.level < 100) {
       this.stats.level++;
+      console.log(`${this.screenName} leveled up to level ${this.stats.level}`);
       for (const stat in this.levelingMatrix) {
         this.levelStat(stat);
       }
+      this.hp = this.stats.health;
     }
   }
 
-  // tick should be overwritten in surface level classes
   tick() {
     const possibleActions = this.getPossibleActionsArray();
     const randNum = getRandomInt(possibleActions.length + (100 - (this.stats.level / 2)));
-    console.log(randNum);
+    // console.log(randNum);
     if (possibleActions[randNum]) {
       return new SubmittedAction(possibleActions[randNum], this);
     }
@@ -112,8 +115,8 @@ export abstract class Being implements IStats {
     return actionArray;
   }
 
-  getRandomName() {
-    const names = ['Bud', 'Jimm', 'Ellaiah']
+  getRandomName(names: string[]): string | void {
+    return names[Math.floor(Math.random() * names.length)]
   }
 
   callAction(action: Action) {
