@@ -25,7 +25,15 @@ const baseLevelingMatrix = {
     luck: 3
 };
 const beingActions = [
-    new Action_1.Action('leave', 1, () => (0, utils_1.getRandomInt)(4) === 0 ? console.log('Player leaves') : console.log('Player thinks'))
+    new Action_1.Action('leave', 1, (caller) => {
+        if ((0, utils_1.getRandomInt)(4) === 0) {
+            console.log(`${caller.screenName} leaves`);
+            // need connection to the character to set its 'isLeaving' property
+        }
+        else {
+            console.log(`${caller.screenName} thinks`);
+        }
+    })
 ];
 // About Beings
 // They have stats, including a level
@@ -39,6 +47,8 @@ const beingActions = [
 class Being {
     constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
         this.actions = [];
+        this.isLeaving = false;
+        this.screenName = '';
         if (typeof statsObject === 'number') {
             level = statsObject;
             statsObject = baseStats;
@@ -90,6 +100,9 @@ class Being {
             }
         }
         return actionArray;
+    }
+    callAction(action) {
+        action.execute(this);
     }
 }
 exports.Being = Being;

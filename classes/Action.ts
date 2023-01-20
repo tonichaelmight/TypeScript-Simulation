@@ -3,9 +3,9 @@ import { Being } from "./Being";
 export class Action {
   name: string;
   weight: number;
-  execute: () => void;
+  execute: (caller: Being) => void;
   
-  constructor(name: string, weight: number, execute: () => void) {
+  constructor(name: string, weight: number, execute: (caller: Being) => void) {
     this.name = name;
     this.weight = weight;
     this.execute = execute;
@@ -22,7 +22,7 @@ export class SubmittedAction {
   }
 
   execute() {
-    this.action.execute();
+    this.character.callAction(this.action);
   }
 }
 

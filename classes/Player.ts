@@ -1,5 +1,5 @@
 import { TStats, TLevelingMatrix } from "../interfaces/Stats";
-import { Person } from "./Person";
+import { Human } from "./Human";
 import { Action, TActionsArray } from "./Action";
 import { getRandomInt } from "../utils";
 
@@ -27,13 +27,13 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const playerActions: TActionsArray = [
-  new Action('whistle', 2, () => console.log('Player whistles')),
-  new Action('cough', 1, () => console.log('Player coughs')),
-  new Action('sing', 5, () => console.log('Player sings')),
-  new Action('leave', 1, () => console.log('Player thinks')) // overwrite so player can't leave
+  new Action('whistle', 2, (caller) => console.log(`${caller.screenName} whistles`)),
+  new Action('cough', 1, (caller) => console.log(`${caller.screenName} coughs`)),
+  new Action('sing', 5, (caller) => console.log(`${caller.screenName} sings`)),
+  new Action('leave', 1, (caller) => console.log(`${caller.screenName} thinks`)) // overwrite so player can't leave
 ]
 
-export class Player extends Person {
+export class Player extends Human {
   constructor(statsObject: TStats | number = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
       level = statsObject;
@@ -41,5 +41,6 @@ export class Player extends Person {
     }
     super(statsObject, levelingMatrix, level);
     this.attachActions(playerActions);
+    this.screenName = 'Player';
   }
 }

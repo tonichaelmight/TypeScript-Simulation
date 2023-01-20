@@ -25,9 +25,10 @@ const baseLevelingMatrix = {
     luck: 7
 };
 const playerActions = [
-    new Action_1.Action('whistle', 2, () => console.log('Player whistles')),
-    new Action_1.Action('cough', 1, () => console.log('Player coughs')),
-    new Action_1.Action('sing', 5, () => console.log('Player sings'))
+    new Action_1.Action('whistle', 2, (caller) => console.log(`${caller.screenName} whistles`)),
+    new Action_1.Action('cough', 1, (caller) => console.log(`${caller.screenName} coughs`)),
+    new Action_1.Action('sing', 5, (caller) => console.log(`${caller.screenName} sings`)),
+    new Action_1.Action('leave', 1, (caller) => console.log(`${caller.screenName} thinks`)) // overwrite so player can't leave
 ];
 class Player extends Person_1.Person {
     constructor(statsObject = Object.assign({}, baseStats), levelingMatrix = Object.assign({}, baseLevelingMatrix), level = 0) {
@@ -37,6 +38,7 @@ class Player extends Person_1.Person {
         }
         super(statsObject, levelingMatrix, level);
         this.attachActions(playerActions);
+        this.screenName = 'Player';
     }
 }
 exports.Player = Player;

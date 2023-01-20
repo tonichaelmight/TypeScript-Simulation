@@ -7,7 +7,7 @@ import { Player } from "./Player";
 export class Game {
   player: Player;
   active: Being[];
-  instance: ReturnType<typeof setTimeout> = setTimeout(() => {}, 100000);
+  instance: ReturnType<typeof setTimeout> = setTimeout(() => {}, 1000);
 
   constructor() {
     this.player = new Player();

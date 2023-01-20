@@ -26,12 +26,12 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const beingActions: TActionsArray = [
-  new Action('leave', 1, () => {
+  new Action('leave', 1, (caller) => {
     if (getRandomInt(4) === 0) {
-      console.log('Player leaves');
+      console.log(`${caller.screenName} leaves`);
       // need connection to the character to set its 'isLeaving' property
     } else {
-      console.log('Player thinks');
+      console.log(`${caller.screenName} thinks`);
     } 
   })
 ]
@@ -52,6 +52,7 @@ export abstract class Being implements IStats {
   levelingMatrix: TLevelingMatrix;
   actions: TActionsArray = [];
   isLeaving: boolean = false;
+  screenName: string = '';
 
   constructor(statsObject: TStats = Object.assign({}, baseStats), levelingMatrix: TLevelingMatrix = Object.assign({}, baseLevelingMatrix), level: number = 0) {
     if (typeof statsObject === 'number') {
@@ -113,7 +114,7 @@ export abstract class Being implements IStats {
   }
 
   callAction(action: Action) {
-
+    action.execute(this);
   }
 
 }

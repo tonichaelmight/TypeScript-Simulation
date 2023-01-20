@@ -15,7 +15,7 @@ class SubmittedAction {
         this.character = character;
     }
     execute() {
-        this.action.execute();
+        this.character.callAction(this.action);
     }
 }
 exports.SubmittedAction = SubmittedAction;

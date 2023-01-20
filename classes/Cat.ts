@@ -26,7 +26,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const catActions: Action[] = [
-  new Action('meow', 5, () => console.log('Meow'))
+  new Action('meow', 5, (caller) => console.log(`${caller.screenName} meows`))
 ]
 
 export class Cat extends Animal {
@@ -37,5 +37,6 @@ export class Cat extends Animal {
     }
     super(statsObject, levelingMatrix, level);
     this.attachActions(catActions);
+    this.screenName = 'Cat';
   }
 }
