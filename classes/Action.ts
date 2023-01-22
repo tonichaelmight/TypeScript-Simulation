@@ -28,3 +28,27 @@ export class SubmittedAction {
 
 export type TActionsArray = Action[];
 
+export type TSubmittedActionsArray = SubmittedAction[];
+
+export class TActionsQueue {
+  actionArray: TSubmittedActionsArray = [];
+  length: number = 0;
+
+  enqueue(arr: TSubmittedActionsArray) {
+    const sortedArr = arr.sort((a, b) => b.character.stats.speed - a.character.stats.speed)
+    sortedArr.forEach(action => {
+      this.actionArray.push(action);
+      this.length++;
+    })
+  }
+
+  dequeue() {
+    const nextAction = this.actionArray.shift();
+    this.length--;
+    return nextAction;
+  }
+
+  delete(action: SubmittedAction) {
+
+  }
+}

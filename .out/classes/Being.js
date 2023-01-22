@@ -84,7 +84,6 @@ class Being {
             this.hp = this.stats.health;
         }
     }
-    // tick should be overwritten in surface level classes
     tick() {
         const possibleActions = this.getPossibleActionsArray();
         const randNum = (0, utils_1.getRandomInt)(possibleActions.length + (100 - (this.stats.level / 2)));

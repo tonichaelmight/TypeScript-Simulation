@@ -26,7 +26,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const witchActions: Action[] = [
-
+  new Action('scry', 15, (caller) => console.log(`${caller.screenName} scries in her massive orb`))
 ];
 
 export class Witch extends Human {

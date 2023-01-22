@@ -1,6 +1,5 @@
-import { EventEmitter } from "stream";
 import { getRandomInt } from "../utils";
-import { SubmittedAction } from "./Action";
+import { SubmittedAction, TActionsQueue, TSubmittedActionsArray } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
 import { Player } from "./Player";
@@ -11,6 +10,7 @@ export class Game {
   active: Being[];
   instance: ReturnType<typeof setTimeout> = setTimeout(() => {}, 1000);
   spawnable = [Cat, Witch];
+  actionQueue: TActionsQueue = new TActionsQueue();
 
   constructor() {
     this.player = new Player();
@@ -24,18 +24,24 @@ export class Game {
         clearInterval(this.instance);
         console.log('You lost lol');
       }
-    }, 1000); // this is the interval of tick() in milliseconds    
+    }, 100); // this is the interval of tick() in milliseconds    
   }
 
   tick() {
     const submittedActions = this.getSubmittedActions();
 
+    if (submittedActions.length > 0) {
+      this.actionQueue.enqueue(submittedActions);
+    }
+    console.log(this.actionQueue);
+
     if (getRandomInt(50) === 1) {
       this.spawn();
     }
 
-    for (const action of submittedActions) {
-      action.execute();
+    if (this.actionQueue.length) {
+      const nextAction = this.actionQueue.dequeue();
+      nextAction?.execute();
     }
 
     this.purgeActive();
@@ -43,7 +49,7 @@ export class Game {
   }
   
   getSubmittedActions() {
-    const submittedActions: SubmittedAction[] = [];
+    const submittedActions: TSubmittedActionsArray = [];
     this.active.forEach(character => {
       const characterAction = character.tick();
       if (characterAction != null) {
