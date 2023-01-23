@@ -1,5 +1,10 @@
 import { Being } from "./Being";
 
+type TActionConfig = {
+  weight: number;
+  recipientType:
+}
+
 export class Action {
   name: string;
   weight: number;
@@ -30,7 +35,7 @@ export type TActionsArray = Action[];
 
 export type TSubmittedActionsArray = SubmittedAction[];
 
-export class TActionsQueue {
+export class TSubmittedActionsQueue {
   actionArray: TSubmittedActionsArray = [];
   length: number = 0;
 
@@ -48,7 +53,14 @@ export class TActionsQueue {
     return nextAction;
   }
 
-  delete(action: SubmittedAction) {
+  containsActionFromCharacter(character: Being) {
+    return this.actionArray.some(action => action.character === character);
+  }
 
+  purge(active: Being[]) {
+    this.actionArray = this.actionArray.filter(currentAction => {
+      return active.includes(currentAction.character);
+    });
+    this.length = this.actionArray.length;
   }
 }

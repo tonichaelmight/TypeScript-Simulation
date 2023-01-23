@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TActionsQueue = exports.SubmittedAction = exports.Action = void 0;
+exports.TSubmittedActionsQueue = exports.SubmittedAction = exports.Action = void 0;
 class Action {
     constructor(name, weight, execute) {
         this.name = name;
@@ -19,7 +19,7 @@ class SubmittedAction {
     }
 }
 exports.SubmittedAction = SubmittedAction;
-class TActionsQueue {
+class TSubmittedActionsQueue {
     constructor() {
         this.actionArray = [];
         this.length = 0;
@@ -36,7 +36,14 @@ class TActionsQueue {
         this.length--;
         return nextAction;
     }
-    delete(action) {
+    containsActionFromCharacter(character) {
+        return this.actionArray.some(action => action.character === character);
+    }
+    purge(active) {
+        this.actionArray = this.actionArray.filter(currentAction => {
+            return active.includes(currentAction.character);
+        });
+        this.length = this.actionArray.length;
     }
 }
-exports.TActionsQueue = TActionsQueue;
+exports.TSubmittedActionsQueue = TSubmittedActionsQueue;

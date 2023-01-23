@@ -1,5 +1,5 @@
 import { getRandomInt } from "../utils";
-import { SubmittedAction, TActionsQueue, TSubmittedActionsArray } from "./Action";
+import { SubmittedAction, TSubmittedActionsQueue, TSubmittedActionsArray } from "./Action";
 import { Being } from "./Being";
 import { Cat } from "./Cat";
 import { Player } from "./Player";
@@ -10,7 +10,7 @@ export class Game {
   active: Being[];
   instance: ReturnType<typeof setTimeout> = setTimeout(() => {}, 1000);
   spawnable = [Cat, Witch];
-  actionQueue: TActionsQueue = new TActionsQueue();
+  actionQueue: TSubmittedActionsQueue = new TSubmittedActionsQueue();
 
   constructor() {
     this.player = new Player();
@@ -33,7 +33,11 @@ export class Game {
     if (submittedActions.length > 0) {
       this.actionQueue.enqueue(submittedActions);
     }
-    console.log(this.actionQueue);
+
+    if (this.actionQueue.length) {
+      //console.log(this.active)
+      // console.log(this.actionQueue);
+    }
 
     if (getRandomInt(50) === 1) {
       this.spawn();
@@ -45,15 +49,18 @@ export class Game {
     }
 
     this.purgeActive();
+    this.actionQueue.purge(this.active);
 
   }
   
   getSubmittedActions() {
     const submittedActions: TSubmittedActionsArray = [];
     this.active.forEach(character => {
-      const characterAction = character.tick();
-      if (characterAction != null) {
-        submittedActions.push(characterAction);
+      if (!this.actionQueue.containsActionFromCharacter(character)) {
+        const characterAction = character.tick();
+        if (characterAction != null) {
+          submittedActions.push(characterAction);
+        }
       }
     });
     return submittedActions;
