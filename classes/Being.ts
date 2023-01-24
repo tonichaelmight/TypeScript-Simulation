@@ -1,6 +1,6 @@
 import { TLevelingMatrix, TStats, IStats } from "../interfaces/Stats";
 import { getRandomInt } from "../utils";
-import { Action, SubmittedAction, TActionsArray } from "./Action";
+import { Action, ActionWithRecipient, SoloAction, SubmittedAction, TActionsArray } from "./Action";
 
 const baseStats: TStats = {
   level: 0,
@@ -26,7 +26,7 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const beingActions: TActionsArray = [
-  new Action('leave', 1, (caller) => {
+  new SoloAction('leave', 1, (caller) => {
     if (getRandomInt(4) === 0) {
       caller.isLeaving = true;
     } else {
@@ -95,8 +95,8 @@ export abstract class Being implements IStats {
     }
   }
 
-  tick() {
-    const possibleActions = this.getPossibleActionsArray();
+  tick(activeCharacters: Being[]) {
+    const possibleActions = this.getPossibleActionsArray(activeCharacters);
     const randNum = getRandomInt(possibleActions.length + (100 - (this.stats.level / 2)));
     // console.log(randNum);
     if (possibleActions[randNum]) {
@@ -105,7 +105,7 @@ export abstract class Being implements IStats {
     return null;
   }
 
-  getPossibleActionsArray() {
+  getPossibleActionsArray(activeCharacters: Being[]) {
     const actionArray = [];
     for (const action of this.actions) {
       for (let i = 0; i < action.weight; i++) {
@@ -119,8 +119,12 @@ export abstract class Being implements IStats {
     return names[Math.floor(Math.random() * names.length)]
   }
 
-  callAction(action: Action) {
-    action.execute(this);
+  callAction(action: Action, recipient?: Being) {
+    if (action.recipientType && recipient && typeof recipient == action.recipientType) {
+      action.execute(this, recipient);
+    } else {
+      action.execute(this);
+    }
   }
 
 }

@@ -1,7 +1,8 @@
 import { TStats, TLevelingMatrix } from "../interfaces/Stats";
 import { Human } from "./Human";
-import { Action, TActionsArray } from "./Action";
+import { Action, ActionWithRecipient, SoloAction, TActionsArray } from "./Action";
 import { getRandomInt } from "../utils";
+import { Cat } from "./Cat";
 
 const baseStats: TStats = {
   level: 0,
@@ -27,10 +28,11 @@ const baseLevelingMatrix: TLevelingMatrix = {
 }
 
 const playerActions: TActionsArray = [
-  new Action('whistle', 2, (caller) => console.log(`${caller.screenName} whistles`)),
-  new Action('cough', 1, (caller) => console.log(`${caller.screenName} coughs`)),
-  new Action('sing', 5, (caller) => console.log(`${caller.screenName} sings`)),
-  new Action('think', 1, (caller) => console.log(`${caller.screenName} thinks`)) 
+  new SoloAction('whistle', 2, (caller) => console.log(`${caller.screenName} whistles`)),
+  new SoloAction('cough', 1, (caller) => console.log(`${caller.screenName} coughs`)),
+  new SoloAction('sing', 5, (caller) => console.log(`${caller.screenName} sings`)),
+  new SoloAction('think', 1, (caller) => console.log(`${caller.screenName} thinks`)),
+  new ActionWithRecipient('pet', 10, (caller, recipient) => console.log(`${caller.screenName} pets ${recipient.screenName}`), {recipientType: typeof Cat})
 ]
 
 export class Player extends Human {

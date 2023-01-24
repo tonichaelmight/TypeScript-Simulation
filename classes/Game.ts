@@ -57,7 +57,7 @@ export class Game {
     const submittedActions: TSubmittedActionsArray = [];
     this.active.forEach(character => {
       if (!this.actionQueue.containsActionFromCharacter(character)) {
-        const characterAction = character.tick();
+        const characterAction = character.tick(this.active);
         if (characterAction != null) {
           submittedActions.push(characterAction);
         }

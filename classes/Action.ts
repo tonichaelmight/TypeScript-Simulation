@@ -1,20 +1,56 @@
 import { Being } from "./Being";
 
-type TActionConfig = {
-  weight: number;
-  recipientType:
+type TSoloActionCallback = (caller: Being) => void;
+type TActionWithRecipientCallback = (caller: Being, recipient: Being) => void;
+
+interface IExecuteNoRecipient {
+  execute: TSoloActionCallback
 }
 
-export class Action {
+interface IExecuteWithRecipient {
+  execute: TActionWithRecipientCallback
+  recipientType: string
+}
+
+type TActionConfig = {
+  recipientType?: string;
+  weightModifiers?: number; // this will take stats/behaviors into account
+}
+
+export abstract class Action {
   name: string;
   weight: number;
-  execute: (caller: Being) => void;
+  execute: Function = () => {}
+  weightModifiers?: number;
+  recipientType?: string;
   
-  constructor(name: string, weight: number, execute: (caller: Being) => void) {
+  constructor(name: string, weight: number, options?: TActionConfig) {
     this.name = name;
     this.weight = weight;
+
+    this.weightModifiers = options?.weightModifiers;
+  }
+}
+
+export class SoloAction extends Action implements IExecuteNoRecipient {
+  execute: TSoloActionCallback;
+
+  constructor(name: string, weight: number, execute: TSoloActionCallback, options?: TActionConfig) {
+    super(name, weight, options);
     this.execute = execute;
   }
+}
+
+export class ActionWithRecipient extends Action implements IExecuteWithRecipient {
+  execute: TActionWithRecipientCallback;
+  recipientType: string;
+
+  constructor(name: string, weight: number, execute: TActionWithRecipientCallback, options: TActionConfig) {
+    super(name, weight, options);
+    this.execute = execute;
+    this.recipientType = options.recipientType || typeof Being;
+  }
+
 }
 
 export class SubmittedAction {
